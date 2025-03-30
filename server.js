@@ -3,8 +3,12 @@ import express from "express"
 const app = express()
 const PORT = 8000
 
-app.get('/', (req, res) => {
-    res.send("Result")
+app.post('/api/questions', (req, res) => {
+    
+})
+
+app.get('/api/questions/:date', (req, res) => {
+    
 })
 
 
