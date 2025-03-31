@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 const questionSchema = new mongoose.Schema({
     date: String, 
     questionIds: [String],
-}, { collection: "questions"})
+})
 
-const Questions = mongoose.model(("QuestionLog", questionSchema))
+const questions = mongoose.model('questions', questionSchema)
+
+
+export default questions
