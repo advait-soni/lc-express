@@ -24,17 +24,15 @@ app.use(express.json())
 
 app.post("/api/questions", async (req, res) => {
   try{
-    console.log("req", req.body)
-    const Q = new questions({
-    date: '31-03-2025',
-    questionIds: ['1234']
+    let Q = new questions({
+      date: req.body.date, 
+      id: req.body.id
     })
     await Q.save()
-    res.status(201).json({message: "Question saved in DB"})
-    res.end()
-  } catch(error){
+    res.status(201).json({message: "Question saved successful"})
+  } catch(error) {
     console.error(error)
-    res.status(500).json({message: "failed to save ques"})
+    res.status(500).send({message: 'Something went wrong'})
   }
 })
 
