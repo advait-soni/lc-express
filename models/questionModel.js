@@ -7,5 +7,5 @@ const questionSchema = new mongoose.Schema({
 
 const questions = mongoose.model('questions', questionSchema)
 
-
+    
 export default questions

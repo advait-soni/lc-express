@@ -6,7 +6,7 @@ import questions from "./models/questionModel.js"
 const MONGO_URI = process.env.MONGO_URI
 const app = express()
 const PORT = process.env.PORT || 8000
- 
+
 mongoose
   .connect(MONGO_URI)
   .then(() => {
@@ -20,6 +20,7 @@ mongoose
   })
 
 app.use(express.json())
+
 
 app.post("/api/questions", async (req, res) => {
   try{
@@ -36,5 +37,6 @@ app.post("/api/questions", async (req, res) => {
     res.status(500).json({message: "failed to save ques"})
   }
 })
+
 
 app.get("/api/questions/:date", (req, res) => {})
