@@ -21,31 +21,33 @@ mongoose
 
 app.use(express.json())
 
-
 app.post("/api/questions", async (req, res) => {
-  try{
-    const {date, id} = req.body
+  try {
+    const { date, id } = req.body
     await questions.findOneAndUpdate(
-      {date: date}, 
-      {$addToSet: { ids: id }}, 
-      {upsert: true}
+      { date: date },
+      { $addToSet: { ids: id } },
+      { upsert: true }
     )
-    res.status(201).json({message: "Question saved successful"})
-  } catch(error) {
+    res.status(201).json({ message: "Question saved successful" })
+  } catch (error) {
     console.error(error)
-    res.status(500).send({message: 'Something went wrong'})
+    res.status(500).send({ message: "Something went wrong" })
   }
 })
 
-
 app.get("/api/questions/:date", async (req, res) => {
-  const date = req.params.date
-  const arr = await questions.findOne({date})
-  
-  if(arr){
-    res.json({num: arr.ids.length})
-  }
-  else{
-    res.status(500).json({message: 'Something Went Wrong'})
+  try {
+    const date = req.params.date
+    const arr = await questions.findOne({ date })
+
+    if (arr) {
+      res.json({ num: arr.ids.length })
+    } else {
+      res.status(500).json({ message: "Something Went Wrong" })
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Something Went Wrong" })
   }
 })
