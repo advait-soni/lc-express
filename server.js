@@ -2,10 +2,15 @@ import express from "express"
 import "dotenv/config"
 import mongoose from "mongoose"
 import questions from "./models/questionModel.js"
+import cors from "cors"
+
 
 const MONGO_URI = process.env.MONGO_URI
 const app = express()
 const PORT = process.env.PORT || 8000
+
+app.use(express.json())
+app.use(cors())
 
 mongoose
   .connect(MONGO_URI)
@@ -19,11 +24,12 @@ mongoose
     console.error(err)
   })
 
-app.use(express.json())
+
 
 app.post("/api/questions", async (req, res) => {
   try {
     const { date, id } = req.body
+    console.log(date, id)
     await questions.findOneAndUpdate(
       { date: date },
       { $addToSet: { ids: id } },
