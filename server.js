@@ -24,11 +24,13 @@ app.use(express.json())
 
 app.post("/api/questions", async (req, res) => {
   try{
-    let Q = new questions({
-      date: req.body.date, 
-      id: req.body.id
-    })
-    await Q.save()
+    const {date, id} = req.body
+    console.log(date, id)
+    await questions.findOneAndUpdate(
+      {date: date}, 
+      {$addToSet: { ids: id }}, 
+      {upsert: true}
+    )
     res.status(201).json({message: "Question saved successful"})
   } catch(error) {
     console.error(error)
