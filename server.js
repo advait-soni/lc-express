@@ -41,6 +41,11 @@ app.post("/api/questions", async (req, res) => {
 app.get("/api/questions/:date", async (req, res) => {
   const date = req.params.date
   const arr = await questions.findOne({date})
-  console.log(arr.ids)
-  res.json({num : arr.ids.length})
+  
+  if(arr){
+    res.json({num: arr.ids.length})
+  }
+  else{
+    res.status(500).json({message: 'Something Went Wrong'})
+  }
 })
