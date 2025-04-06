@@ -25,7 +25,6 @@ app.use(express.json())
 app.post("/api/questions", async (req, res) => {
   try{
     const {date, id} = req.body
-    console.log(date, id)
     await questions.findOneAndUpdate(
       {date: date}, 
       {$addToSet: { ids: id }}, 
@@ -39,4 +38,9 @@ app.post("/api/questions", async (req, res) => {
 })
 
 
-app.get("/api/questions/:date", (req, res) => {})
+app.get("/api/questions/:date", async (req, res) => {
+  const date = req.params.date
+  const arr = await questions.findOne({date})
+  console.log(arr.ids)
+  res.json({num : arr.ids.length})
+})
