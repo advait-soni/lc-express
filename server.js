@@ -42,6 +42,29 @@ app.post("/api/questions", async (req, res) => {
   }
 })
 
+
+app.get("/api/questions/all",  async (req, res) => {
+  console.log('request')
+
+  try{
+    const result = await questions.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalIds: { $sum: { $size: "$ids" } }
+        }
+      }
+    ])
+    console.log('result', result)
+    // result [ { _id: null, totalIds: 6 } ]
+    res.status(201).json({count: result[0].totalIds})
+  } catch(error) {
+    console.error(error)
+    res.status(500).json({message: "Something went wrong"})
+  }
+})
+
+
 app.get("/api/questions/:date", async (req, res) => {
   try {
     const date = req.params.date
@@ -57,3 +80,6 @@ app.get("/api/questions/:date", async (req, res) => {
     res.status(500).json({ message: "Something Went Wrong" })
   }
 })
+
+
+
