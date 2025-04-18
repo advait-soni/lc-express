@@ -46,7 +46,7 @@ app.get("/api/questions/:date", async (req, res) => {
   try {
     const date = req.params.date
     const arr = await questions.findOne({ date })
-
+    console.log('date', date)
     if (arr) {
       res.json({ num: arr.ids.length })
     } else {
